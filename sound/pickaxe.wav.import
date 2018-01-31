@@ -1,0 +1,24 @@
+[remap]
+
+importer="wav"
+type="AudioStreamSample"
+path="res://.import/pickaxe.wav-33ed33c1f70566743aee5d705030ad49.sample"
+
+[deps]
+
+source_file="res://sound/pickaxe.wav"
+source_md5="b81eced3637d761451d2c0f54fa09219"
+
+dest_files=[ "res://.import/pickaxe.wav-33ed33c1f70566743aee5d705030ad49.sample" ]
+dest_md5="ec6879dd140ef0aa9333fd46fef22096"
+
+[params]
+
+force/8_bit=false
+force/mono=false
+force/max_rate=false
+force/max_rate_hz=44100
+edit/trim=true
+edit/normalize=true
+edit/loop=false
+compress/mode=0

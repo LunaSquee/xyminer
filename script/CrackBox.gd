@@ -1,0 +1,56 @@
+"""
+Creates a quad with six different texture options for break animation
+"""
+extends MeshInstance
+
+var textures = []
+
+var mat = SpatialMaterial.new()
+
+func clear_stop():
+	self.translation = Vector3(-10, 0, 0)
+
+func set_step(tex_index):
+	mat.albedo_texture = textures[tex_index - 1]
+	self.material_override = mat
+
+func _ready():
+	var st = SurfaceTool.new()
+	mat.flags_transparent = true
+
+	for i in range(0, 6):
+		var texture = ImageTexture.new()
+		texture.load("res://image/crack/Crack" + str(i + 1) + ".png")
+		textures.push_back(texture)
+	
+	st.begin(Mesh.PRIMITIVE_TRIANGLES)
+
+	# Front Face
+	st.add_uv(Vector2(1,1))
+	st.add_vertex(Vector3(0,0,1) + Vector3(0, 0, 0.1))
+	
+	st.add_uv(Vector2(1,0))
+	st.add_vertex(Vector3(0,1,1) + Vector3(0, 0, 0.1))
+	
+	st.add_uv(Vector2(0,1))
+	st.add_vertex(Vector3(1,0,1) + Vector3(0, 0, 0.1))
+	
+	st.add_uv(Vector2(0,1))
+	st.add_vertex(Vector3(1,0,1) + Vector3(0, 0, 0.1))
+	
+	st.add_uv(Vector2(1,0))
+	st.add_vertex(Vector3(0,1,1) + Vector3(0, 0, 0.1))
+	
+	st.add_uv(Vector2(0,0))
+	st.add_vertex(Vector3(1,1,1) + Vector3(0, 0, 0.1))
+	
+	st.index()
+	st.generate_normals()
+	self.set_mesh(st.commit())
+	
+	self.clear_stop()
+
+#func _process(delta):
+#	# Called every frame. Delta is time since last frame.
+#	# Update game logic here.
+#	pass
