@@ -7,6 +7,13 @@ var textures = []
 
 var mat = SpatialMaterial.new()
 
+export(StreamTexture) var stage_1 = null
+export(StreamTexture) var stage_2 = null
+export(StreamTexture) var stage_3 = null
+export(StreamTexture) var stage_4 = null
+export(StreamTexture) var stage_5 = null
+export(StreamTexture) var stage_6 = null
+
 func clear_stop():
 	self.translation = Vector3(-10, 0, 0)
 
@@ -18,10 +25,7 @@ func _ready():
 	var st = SurfaceTool.new()
 	mat.flags_transparent = true
 
-	for i in range(0, 6):
-		var texture = ImageTexture.new()
-		texture.load("res://image/crack/Crack" + str(i + 1) + ".png")
-		textures.push_back(texture)
+	textures = [stage_1, stage_2, stage_3, stage_4, stage_5, stage_6]
 	
 	st.begin(Mesh.PRIMITIVE_TRIANGLES)
 
