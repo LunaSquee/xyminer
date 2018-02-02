@@ -41,9 +41,19 @@ var to
 
 # Player Stats
 var inventory = {}
-var money = 0
+var props = {
+	"Bomb": 1,
+	"Torch": 1
+}
+var money = 1000
+
+# Pickaxe stats
+# `delay` is ticks until `strength` is subtracted from tile's damage value
+var pickaxe_level = 1
 var pickaxe_delay = 10
 var pickaxe_strength = 1
+var pickaxe_health_max = 250
+var pickaxe_health = 250
 
 # Currently breaking tile
 # {"x": 0, "y": 0}
@@ -72,7 +82,6 @@ func particle_boom(x, y, tile_mat):
 	particle.draw_pass_1 = particle_mesh
 	
 	explode_material.set_color(tile_mat.albedo_color)
-	print(explode_material.color)
 	particle.set_process_material(explode_material)
 	
 	particle.set_lifetime(particle_life)
@@ -140,6 +149,11 @@ func _process(delta):
 		camera.translation.x = chunk.cellsPerRow - self.translation.x - camera.translation.z
 	else:
 		camera.translation.x = 0
+	
+	if self.translation.y > ground_level:
+		if pickaxe_health < pickaxe_health_max:
+			pickaxe_health += 5
+			pickaxe_health = clamp(pickaxe_health, 0, pickaxe_health_max)
 
 func block_distance (block):
 	var vector = Vector2(self.translation.x, self.translation.y)
@@ -158,6 +172,12 @@ func _can_mine(block):
 	var tile = chunk.getTileAt(x, y)
 
 	if not tile:
+		return false
+	
+	if pickaxe_health == 0:
+		return false
+	
+	if tile.damage == -1:
 		return false
 	
 	if chunk.getTileAt(x + 1, y) and chunk.getTileAt(x - 1, y) and chunk.getTileAt(x, y + 1) and chunk.getTileAt(x, y - 1):
@@ -194,6 +214,16 @@ func _physics_process(delta):
 		if break_clock <= 0:
 			# Damage the tile
 			# destroyed is true when the tile was set to null
+			pickaxe_health -= 1
+			if pickaxe_health <= 0:
+				pickaxe_health = 0
+				if breaking:
+					breaking = null
+					break_anim.clear_stop()
+					$Sounds/Pickaxe.stop()
+					$Sounds/PickaxeBreak.play()
+					return
+			
 			var destroyed = chunk.damage_tile(breaking.x, breaking.y, pickaxe_strength)
 			
 			if destroyed:

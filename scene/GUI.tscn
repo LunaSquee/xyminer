@@ -1,8 +1,14 @@
-[gd_scene load_steps=6 format=2]
+[gd_scene load_steps=14 format=2]
 
 [ext_resource path="res://script/GUI.gd" type="Script" id=1]
 [ext_resource path="res://fonts/OpenSans-Regular.ttf" type="DynamicFontData" id=2]
 [ext_resource path="res://fonts/OpenSans-Bold.ttf" type="DynamicFontData" id=3]
+[ext_resource path="res://image/pickaxe_md.png" type="Texture" id=4]
+[ext_resource path="res://fonts/OpenSans-ExtraBoldItalic.ttf" type="DynamicFontData" id=5]
+[ext_resource path="res://image/screwdriver-and-wrench-crossed.png" type="Texture" id=6]
+[ext_resource path="res://image/bomb.png" type="Texture" id=7]
+[ext_resource path="res://image/torch.png" type="Texture" id=8]
+[ext_resource path="res://sound/cash.wav" type="AudioStream" id=9]
 
 [sub_resource type="DynamicFont" id=1]
 
@@ -18,6 +24,22 @@ size = 18
 use_mipmaps = false
 use_filter = false
 font_data = ExtResource( 3 )
+_sections_unfolded = [ "Font", "Settings" ]
+
+[sub_resource type="DynamicFont" id=3]
+
+size = 12
+use_mipmaps = false
+use_filter = false
+font_data = ExtResource( 2 )
+_sections_unfolded = [ "Font", "Settings" ]
+
+[sub_resource type="DynamicFont" id=4]
+
+size = 14
+use_mipmaps = false
+use_filter = false
+font_data = ExtResource( 5 )
 _sections_unfolded = [ "Font", "Settings" ]
 
 [node name="GUI" type="Control" index="0"]
@@ -50,7 +72,6 @@ mouse_default_cursor_shape = 0
 size_flags_horizontal = 1
 size_flags_vertical = 1
 alignment = 1
-_sections_unfolded = [ "Visibility" ]
 
 [node name="Label" type="Label" parent="Inventory" index="0"]
 
@@ -107,49 +128,81 @@ margin_top = 232.0
 margin_right = 140.0
 margin_bottom = 252.0
 rect_pivot_offset = Vector2( 0, 0 )
-focus_mode = 2
 mouse_filter = 0
 mouse_default_cursor_shape = 0
 size_flags_horizontal = 1
 size_flags_vertical = 1
 toggle_mode = false
-enabled_focus_mode = 2
+enabled_focus_mode = 0
 shortcut = null
 group = null
-text = "Open Sales"
+text = "Open Shop"
 flat = false
 align = 1
 
 [node name="Sales" type="WindowDialog" parent="." index="1"]
 
-visible = false
-anchor_left = 0.0
-anchor_top = 0.0
-anchor_right = 0.0
-anchor_bottom = 0.0
-margin_left = 350.0
-margin_top = 200.0
-margin_right = 669.0
-margin_bottom = 390.0
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_left = -667.0
+margin_top = -401.0
+margin_right = -347.0
+margin_bottom = -171.0
 rect_pivot_offset = Vector2( 0, 0 )
 mouse_filter = 0
 mouse_default_cursor_shape = 0
 size_flags_horizontal = 1
 size_flags_vertical = 1
 popup_exclusive = false
-window_title = "Sales"
+window_title = "Shop"
 resizable = false
 
-[node name="Inventory" type="ItemList" parent="Sales" index="1"]
+[node name="Tabs" type="TabContainer" parent="Sales" index="1"]
 
 anchor_left = 0.0
 anchor_top = 0.0
 anchor_right = 0.0
 anchor_bottom = 0.0
-margin_left = 10.0
-margin_top = 10.0
-margin_right = 100.0
-margin_bottom = 140.0
+margin_top = 5.0
+margin_right = 320.0
+margin_bottom = 230.0
+rect_pivot_offset = Vector2( 0, 0 )
+mouse_filter = 0
+mouse_default_cursor_shape = 0
+size_flags_horizontal = 1
+size_flags_vertical = 1
+tab_align = 1
+tabs_visible = true
+
+[node name="Sell" type="Container" parent="Sales/Tabs" index="0"]
+
+editor/display_folded = true
+anchor_left = 0.0
+anchor_top = 0.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_left = 4.0
+margin_top = 32.0
+margin_right = -4.0
+margin_bottom = -4.0
+rect_pivot_offset = Vector2( 0, 0 )
+mouse_filter = 0
+mouse_default_cursor_shape = 0
+size_flags_horizontal = 1
+size_flags_vertical = 1
+
+[node name="Inventory" type="ItemList" parent="Sales/Tabs/Sell" index="0"]
+
+anchor_left = 0.0
+anchor_top = 0.0
+anchor_right = 0.0
+anchor_bottom = 0.0
+margin_left = 6.0
+margin_top = -2.0
+margin_right = 96.0
+margin_bottom = 144.0
 rect_pivot_offset = Vector2( 0, 0 )
 rect_clip_content = true
 focus_mode = 2
@@ -162,24 +215,24 @@ select_mode = 0
 icon_mode = 1
 fixed_icon_size = Vector2( 0, 0 )
 
-[node name="Information" type="Container" parent="Sales" index="2"]
+[node name="Information" type="Container" parent="Sales/Tabs/Sell" index="1"]
 
-visible = false
+editor/display_folded = true
 anchor_left = 0.0
 anchor_top = 0.0
 anchor_right = 0.0
 anchor_bottom = 0.0
-margin_left = 110.0
-margin_top = 10.0
-margin_right = 310.0
-margin_bottom = 180.0
+margin_left = 106.0
+margin_top = -1.0
+margin_right = 306.0
+margin_bottom = 148.0
 rect_pivot_offset = Vector2( 0, 0 )
 mouse_filter = 0
 mouse_default_cursor_shape = 0
 size_flags_horizontal = 1
 size_flags_vertical = 1
 
-[node name="ItemName" type="Label" parent="Sales/Information" index="0"]
+[node name="ItemName" type="Label" parent="Sales/Tabs/Sell/Information" index="0"]
 
 anchor_left = 0.0
 anchor_top = 0.0
@@ -193,13 +246,13 @@ mouse_default_cursor_shape = 0
 size_flags_horizontal = 1
 size_flags_vertical = 4
 custom_fonts/font = SubResource( 2 )
-text = "Fawless Diamond"
+text = "Flawless Diamond"
 percent_visible = 1.0
 lines_skipped = 0
 max_lines_visible = -1
 _sections_unfolded = [ "BBCode", "custom_fonts" ]
 
-[node name="Count" type="Label" parent="Sales/Information" index="1"]
+[node name="Count" type="Label" parent="Sales/Tabs/Sell/Information" index="1"]
 
 anchor_left = 0.0
 anchor_top = 0.0
@@ -219,7 +272,7 @@ lines_skipped = 0
 max_lines_visible = -1
 _sections_unfolded = [ "Rect" ]
 
-[node name="PricePer" type="Label" parent="Sales/Information" index="2"]
+[node name="PricePer" type="Label" parent="Sales/Tabs/Sell/Information" index="2"]
 
 anchor_left = 0.0
 anchor_top = 0.0
@@ -239,7 +292,7 @@ lines_skipped = 0
 max_lines_visible = -1
 _sections_unfolded = [ "Rect" ]
 
-[node name="PriceAll" type="Label" parent="Sales/Information" index="3"]
+[node name="PriceAll" type="Label" parent="Sales/Tabs/Sell/Information" index="3"]
 
 anchor_left = 0.0
 anchor_top = 0.0
@@ -259,23 +312,23 @@ lines_skipped = 0
 max_lines_visible = -1
 _sections_unfolded = [ "Rect" ]
 
-[node name="Buttons" type="Container" parent="Sales/Information" index="4"]
+[node name="Buttons" type="Container" parent="Sales/Tabs/Sell/Information" index="4"]
 
 anchor_left = 0.0
 anchor_top = 0.0
 anchor_right = 0.0
 anchor_bottom = 0.0
-margin_left = -100.0
-margin_top = 130.0
-margin_right = 201.0
-margin_bottom = 170.0
+margin_left = -101.0
+margin_top = 145.0
+margin_right = 200.0
+margin_bottom = 185.0
 rect_pivot_offset = Vector2( 0, 0 )
 mouse_filter = 0
 mouse_default_cursor_shape = 0
 size_flags_horizontal = 1
 size_flags_vertical = 1
 
-[node name="SellAll" type="Button" parent="Sales/Information/Buttons" index="0"]
+[node name="SellAll" type="Button" parent="Sales/Tabs/Sell/Information/Buttons" index="0"]
 
 anchor_left = 0.0
 anchor_top = 0.0
@@ -299,7 +352,7 @@ text = "Sell All"
 flat = false
 align = 1
 
-[node name="SellOne" type="Button" parent="Sales/Information/Buttons" index="1"]
+[node name="SellOne" type="Button" parent="Sales/Tabs/Sell/Information/Buttons" index="1"]
 
 anchor_left = 0.0
 anchor_top = 0.0
@@ -323,7 +376,7 @@ text = "Sell 1"
 flat = false
 align = 1
 
-[node name="SellFive" type="Button" parent="Sales/Information/Buttons" index="2"]
+[node name="SellFive" type="Button" parent="Sales/Tabs/Sell/Information/Buttons" index="2"]
 
 anchor_left = 0.0
 anchor_top = 0.0
@@ -347,16 +400,16 @@ text = "Sell 5"
 flat = false
 align = 1
 
-[node name="QuickSell" type="Button" parent="Sales" index="3"]
+[node name="QuickSell" type="Button" parent="Sales/Tabs/Sell" index="2"]
 
 anchor_left = 0.0
 anchor_top = 0.0
 anchor_right = 0.0
 anchor_bottom = 0.0
-margin_left = 10.0
-margin_top = 150.0
-margin_right = 100.0
-margin_bottom = 170.0
+margin_left = 6.0
+margin_top = 153.0
+margin_right = 96.0
+margin_bottom = 173.0
 rect_pivot_offset = Vector2( 0, 0 )
 focus_mode = 2
 mouse_filter = 0
@@ -370,6 +423,186 @@ group = null
 text = "Quick Sell"
 flat = false
 align = 1
+
+[node name="Buy" type="Container" parent="Sales/Tabs" index="1"]
+
+visible = false
+anchor_left = 0.0
+anchor_top = 0.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_left = 4.0
+margin_top = 32.0
+margin_right = -4.0
+margin_bottom = -4.0
+rect_pivot_offset = Vector2( 0, 0 )
+mouse_filter = 0
+mouse_default_cursor_shape = 0
+size_flags_horizontal = 1
+size_flags_vertical = 1
+
+[node name="ItemList" type="ItemList" parent="Sales/Tabs/Buy" index="0"]
+
+anchor_left = 0.0
+anchor_top = 0.0
+anchor_right = 0.0
+anchor_bottom = 0.0
+margin_left = 6.0
+margin_top = 23.0
+margin_right = 126.0
+margin_bottom = 184.0
+rect_pivot_offset = Vector2( 0, 0 )
+rect_clip_content = true
+focus_mode = 2
+mouse_filter = 0
+mouse_default_cursor_shape = 0
+size_flags_horizontal = 1
+size_flags_vertical = 1
+items = [  ]
+select_mode = 0
+icon_mode = 1
+fixed_icon_size = Vector2( 0, 0 )
+
+[node name="Information" type="Container" parent="Sales/Tabs/Buy" index="1"]
+
+editor/display_folded = true
+anchor_left = 0.0
+anchor_top = 0.0
+anchor_right = 0.0
+anchor_bottom = 0.0
+margin_left = 137.0
+margin_top = 4.0
+margin_right = 307.0
+margin_bottom = 183.0
+rect_pivot_offset = Vector2( 0, 0 )
+mouse_filter = 0
+mouse_default_cursor_shape = 0
+size_flags_horizontal = 1
+size_flags_vertical = 1
+
+[node name="ItemName" type="Label" parent="Sales/Tabs/Buy/Information" index="0"]
+
+anchor_left = 0.0
+anchor_top = 0.0
+anchor_right = 0.0
+anchor_bottom = 0.0
+margin_right = 200.0
+margin_bottom = 40.0
+rect_pivot_offset = Vector2( 0, 0 )
+mouse_filter = 2
+mouse_default_cursor_shape = 0
+size_flags_horizontal = 1
+size_flags_vertical = 4
+custom_fonts/font = SubResource( 2 )
+text = "Pickaxe"
+percent_visible = 1.0
+lines_skipped = 0
+max_lines_visible = -1
+_sections_unfolded = [ "BBCode", "custom_fonts" ]
+
+[node name="Price" type="Label" parent="Sales/Tabs/Buy/Information" index="1"]
+
+anchor_left = 0.0
+anchor_top = 0.0
+anchor_right = 0.0
+anchor_bottom = 0.0
+margin_top = 69.0
+margin_right = 91.0
+margin_bottom = 83.0
+rect_pivot_offset = Vector2( 0, 0 )
+mouse_filter = 2
+mouse_default_cursor_shape = 0
+size_flags_horizontal = 1
+size_flags_vertical = 4
+text = "Price"
+percent_visible = 1.0
+lines_skipped = 0
+max_lines_visible = -1
+_sections_unfolded = [ "Rect" ]
+
+[node name="Count" type="Label" parent="Sales/Tabs/Buy/Information" index="2"]
+
+anchor_left = 0.0
+anchor_top = 0.0
+anchor_right = 0.0
+anchor_bottom = 0.0
+margin_top = 82.0
+margin_right = 91.0
+margin_bottom = 96.0
+rect_pivot_offset = Vector2( 0, 0 )
+mouse_filter = 2
+mouse_default_cursor_shape = 0
+size_flags_horizontal = 1
+size_flags_vertical = 4
+text = "Count"
+percent_visible = 1.0
+lines_skipped = 0
+max_lines_visible = -1
+_sections_unfolded = [ "Rect" ]
+
+[node name="Buttons" type="Container" parent="Sales/Tabs/Buy/Information" index="3"]
+
+editor/display_folded = true
+anchor_left = 0.0
+anchor_top = 0.0
+anchor_right = 0.0
+anchor_bottom = 0.0
+margin_left = -2.0
+margin_top = 140.0
+margin_right = 169.0
+margin_bottom = 180.0
+rect_pivot_offset = Vector2( 0, 0 )
+mouse_filter = 0
+mouse_default_cursor_shape = 0
+size_flags_horizontal = 1
+size_flags_vertical = 1
+
+[node name="Buy" type="Button" parent="Sales/Tabs/Buy/Information/Buttons" index="0"]
+
+anchor_left = 0.0
+anchor_top = 0.0
+anchor_right = 0.0
+anchor_bottom = 0.0
+margin_left = 101.0
+margin_top = 9.0
+margin_right = 161.0
+margin_bottom = 29.0
+rect_pivot_offset = Vector2( 0, 0 )
+focus_mode = 2
+mouse_filter = 0
+mouse_default_cursor_shape = 0
+size_flags_horizontal = 1
+size_flags_vertical = 1
+toggle_mode = false
+enabled_focus_mode = 2
+shortcut = null
+group = null
+text = "Buy"
+flat = false
+align = 1
+
+[node name="Label" type="Label" parent="Sales/Tabs/Buy" index="2"]
+
+anchor_left = 0.0
+anchor_top = 0.0
+anchor_right = 0.0
+anchor_bottom = 0.0
+margin_left = 6.0
+margin_top = 3.0
+margin_right = 126.0
+margin_bottom = 23.0
+rect_pivot_offset = Vector2( 0, 0 )
+mouse_filter = 2
+mouse_default_cursor_shape = 0
+size_flags_horizontal = 1
+size_flags_vertical = 4
+custom_fonts/font = SubResource( 3 )
+text = "Available Items"
+align = 1
+percent_visible = 1.0
+lines_skipped = 0
+max_lines_visible = -1
+_sections_unfolded = [ "custom_fonts" ]
 
 [node name="Money" type="Label" parent="." index="2"]
 
@@ -392,5 +625,278 @@ percent_visible = 1.0
 lines_skipped = 0
 max_lines_visible = -1
 _sections_unfolded = [ "Anchor", "Margin" ]
+
+[node name="Pickaxe" type="Container" parent="." index="3"]
+
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_left = -134.0
+margin_top = -131.0
+margin_right = -24.0
+margin_bottom = -20.0
+rect_pivot_offset = Vector2( 0, 0 )
+mouse_filter = 0
+mouse_default_cursor_shape = 0
+size_flags_horizontal = 1
+size_flags_vertical = 1
+_sections_unfolded = [ "Anchor", "Margin" ]
+
+[node name="PickIcon" type="Control" parent="Pickaxe" index="0"]
+
+editor/display_folded = true
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_left = -90.0
+margin_top = -100.0
+margin_right = -10.0
+margin_bottom = -20.0
+rect_pivot_offset = Vector2( 0, 0 )
+mouse_filter = 0
+mouse_default_cursor_shape = 0
+size_flags_horizontal = 1
+size_flags_vertical = 1
+_sections_unfolded = [ "Anchor" ]
+
+[node name="DurabilityBarDrop" type="ColorRect" parent="Pickaxe/PickIcon" index="0"]
+
+anchor_left = 0.0
+anchor_top = 0.0
+anchor_right = 0.0
+anchor_bottom = 0.0
+margin_left = 66.0
+margin_top = 75.0
+margin_right = 122.0
+margin_bottom = 88.0
+rect_rotation = 225.0
+rect_pivot_offset = Vector2( 0, 0 )
+mouse_filter = 0
+mouse_default_cursor_shape = 0
+size_flags_horizontal = 1
+size_flags_vertical = 1
+color = Color( 1, 0, 0, 1 )
+_sections_unfolded = [ "Rect" ]
+
+[node name="DurabilityBar" type="ColorRect" parent="Pickaxe/PickIcon" index="1"]
+
+anchor_left = 0.0
+anchor_top = 0.0
+anchor_right = 0.0
+anchor_bottom = 0.0
+margin_left = 66.0
+margin_top = 75.0
+margin_right = 122.0
+margin_bottom = 88.0
+rect_min_size = Vector2( 0, 13 )
+rect_rotation = 225.0
+rect_pivot_offset = Vector2( 0, 0 )
+mouse_filter = 0
+mouse_default_cursor_shape = 0
+size_flags_horizontal = 1
+size_flags_vertical = 1
+color = Color( 0, 1, 0, 1 )
+_sections_unfolded = [ "Rect" ]
+
+[node name="Silhouette" type="TextureRect" parent="Pickaxe/PickIcon" index="2"]
+
+anchor_left = 0.0
+anchor_top = 0.0
+anchor_right = 0.0
+anchor_bottom = 0.0
+margin_right = 75.0
+margin_bottom = 75.0
+rect_pivot_offset = Vector2( 0, 0 )
+mouse_filter = 1
+mouse_default_cursor_shape = 0
+size_flags_horizontal = 1
+size_flags_vertical = 1
+texture = ExtResource( 4 )
+expand = true
+stretch_mode = 0
+
+[node name="PickName" type="Label" parent="Pickaxe" index="1"]
+
+anchor_left = 0.0
+anchor_top = 0.0
+anchor_right = 0.0
+anchor_bottom = 0.0
+margin_left = 10.0
+margin_top = 91.0
+margin_right = 110.0
+margin_bottom = 105.0
+rect_pivot_offset = Vector2( 0, 0 )
+mouse_filter = 2
+mouse_default_cursor_shape = 0
+size_flags_horizontal = 1
+size_flags_vertical = 4
+custom_fonts/font = SubResource( 4 )
+text = "Rock Pickaxe"
+align = 1
+percent_visible = 1.0
+lines_skipped = 0
+max_lines_visible = -1
+_sections_unfolded = [ "custom_fonts" ]
+
+[node name="QuickRepair" type="TextureButton" parent="Pickaxe" index="2"]
+
+anchor_left = 0.0
+anchor_top = 0.0
+anchor_right = 0.0
+anchor_bottom = 0.0
+margin_left = 102.0
+margin_top = 12.0
+margin_right = 118.0
+margin_bottom = 30.0
+rect_pivot_offset = Vector2( 0, 0 )
+hint_tooltip = "Quick Repair"
+mouse_filter = 0
+mouse_default_cursor_shape = 0
+size_flags_horizontal = 1
+size_flags_vertical = 1
+toggle_mode = false
+enabled_focus_mode = 0
+shortcut = null
+group = null
+texture_normal = ExtResource( 6 )
+_sections_unfolded = [ "Hint", "Margin", "Textures" ]
+
+[node name="Repair" type="ConfirmationDialog" parent="." index="4"]
+
+visible = false
+anchor_left = 0.0
+anchor_top = 0.0
+anchor_right = 0.0
+anchor_bottom = 0.0
+margin_left = 468.0
+margin_top = 237.0
+margin_right = 668.0
+margin_bottom = 307.0
+rect_min_size = Vector2( 200, 70 )
+rect_pivot_offset = Vector2( 0, 0 )
+mouse_filter = 0
+mouse_default_cursor_shape = 0
+size_flags_horizontal = 1
+size_flags_vertical = 1
+popup_exclusive = false
+window_title = "Confirm Repair"
+resizable = false
+dialog_text = "Repair pickaxe for $200?"
+dialog_hide_on_ok = true
+_sections_unfolded = [ "Dialog" ]
+
+[node name="Powerups" type="Control" parent="." index="5"]
+
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_left = -44.0
+margin_top = -410.0
+margin_right = -14.0
+margin_bottom = -319.0
+rect_pivot_offset = Vector2( 0, 0 )
+mouse_filter = 0
+mouse_default_cursor_shape = 0
+size_flags_horizontal = 1
+size_flags_vertical = 1
+_sections_unfolded = [ "Anchor" ]
+
+[node name="Bomb" type="TextureButton" parent="Powerups" index="0"]
+
+editor/display_folded = true
+anchor_left = 0.0
+anchor_top = 0.0
+anchor_right = 0.0
+anchor_bottom = 0.0
+margin_right = 30.0
+margin_bottom = 31.0
+rect_pivot_offset = Vector2( 0, 0 )
+mouse_filter = 0
+mouse_default_cursor_shape = 0
+size_flags_horizontal = 1
+size_flags_vertical = 1
+toggle_mode = false
+enabled_focus_mode = 0
+shortcut = null
+group = null
+texture_normal = ExtResource( 7 )
+expand = true
+_sections_unfolded = [ "Textures" ]
+
+[node name="Count" type="Label" parent="Powerups/Bomb" index="0"]
+
+anchor_left = 0.0
+anchor_top = 0.0
+anchor_right = 0.0
+anchor_bottom = 0.0
+margin_left = 10.0
+margin_top = 16.0
+margin_right = 30.0
+margin_bottom = 30.0
+rect_pivot_offset = Vector2( 0, 0 )
+mouse_filter = 2
+mouse_default_cursor_shape = 0
+size_flags_horizontal = 1
+size_flags_vertical = 4
+text = "0"
+align = 2
+percent_visible = 1.0
+lines_skipped = 0
+max_lines_visible = -1
+
+[node name="Torch" type="TextureButton" parent="Powerups" index="1"]
+
+editor/display_folded = true
+anchor_left = 0.0
+anchor_top = 0.0
+anchor_right = 0.0
+anchor_bottom = 0.0
+margin_top = 40.0
+margin_right = 30.0
+margin_bottom = 71.0
+rect_pivot_offset = Vector2( 0, 0 )
+mouse_filter = 0
+mouse_default_cursor_shape = 0
+size_flags_horizontal = 1
+size_flags_vertical = 1
+toggle_mode = false
+enabled_focus_mode = 0
+shortcut = null
+group = null
+texture_normal = ExtResource( 8 )
+expand = true
+_sections_unfolded = [ "Textures" ]
+
+[node name="Count" type="Label" parent="Powerups/Torch" index="0"]
+
+anchor_left = 0.0
+anchor_top = 0.0
+anchor_right = 0.0
+anchor_bottom = 0.0
+margin_left = 10.0
+margin_top = 16.0
+margin_right = 30.0
+margin_bottom = 30.0
+rect_pivot_offset = Vector2( 0, 0 )
+mouse_filter = 2
+mouse_default_cursor_shape = 0
+size_flags_horizontal = 1
+size_flags_vertical = 4
+text = "0"
+align = 2
+percent_visible = 1.0
+lines_skipped = 0
+max_lines_visible = -1
+
+[node name="BuySound" type="AudioStreamPlayer" parent="." index="6"]
+
+stream = ExtResource( 9 )
+volume_db = -15.0
+autoplay = false
+mix_target = 0
+bus = "Master"
 
 

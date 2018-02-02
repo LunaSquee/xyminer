@@ -1,2 +1,4 @@
-pickaxe.wav - SoundBible.com - http://soundbible.com/1328-Pickaxe.html
+pickaxe.wav - Benboncan - http://soundbible.com/1328-Pickaxe.html
 cruble.wav - Mike Koenig / SoundBible.com - http://soundbible.com/1886-Crumbling.html
+metallic.wav - Sound Explorer - http://soundbible.com/1980-Swords-Collide.html
+bomb.wav - Sound Explorer - http://soundbible.com/1986-Bomb-Exploding.html

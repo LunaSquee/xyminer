@@ -34,8 +34,8 @@ var cells = []
 # Materials (populated in _ready())
 var materials = []
 
-# Material strengths (Determines pickaxe required)
-var strengths = [20, 30, 40, 50, 60, 90, 120, 140, 165, 170, 200, 250, 500]
+# Material strengths (Determines mine time)
+var strengths = [10, 15, 30, 50, 60, 90, 120, 140, 165, 170, 200, 250, 500]
 
 # Names of the materials
 var names = ["Sand", "Topsoil", "Dirt", "Rock", "Copper", "Iron", "Silver", "Gold", "Amethyst", "Emerald", "Sapphire", "Ruby", "Diamond", "Flawless Diamond"]
@@ -179,7 +179,7 @@ func setTileAt(x, y, num):
 		return
 
 	var strength = strengths[num - 1]
-	cells[y][x] = {"tile": num, "damage": strength}
+	cells[y][x] = {"tile": num, "damage": float(strength)}
 
 # Get the name, material and strength of a tile
 func get_tile_info (tile):
@@ -366,7 +366,7 @@ func generate():
 				select_cell = mineral
 			
 			var strength = strengths[select_cell - 1]
-			row.push_back({"tile": select_cell, "damage": strength})
+			row.push_back({"tile": select_cell, "damage": float(strength)})
 		cells.push_back(row)
 
 func _ready():
